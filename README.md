@@ -21,6 +21,7 @@ A detecção, entretanto, é limitada às cartas de Ás a 10. **Não identifica*
 
 - **Python 3**
 - **OpenCV (cv2)**
+- **Baralho ou imagem de uma carta**
 
 ### Passos para Instalar
 
@@ -40,7 +41,19 @@ A detecção, entretanto, é limitada às cartas de Ás a 10. **Não identifica*
 
 ## Como Usar
 
-Clone este repositório e execute o script de detecção com uma webcam conectada para iniciar o processo de reconhecimento de cartas.
+1.**Clone o Repositório**
+
+```bash
+   git clone https://github.com/FilhoDeEd/Cards-Detector.git
+```
+
+2.**Execute o código**
+- Na pasta do repositório, execute o comando para iniciar a identificação de cartas:
+```bash
+   python main.py
+```
+
+3.**Aproxime a carta desejada no local indicado**
 
 ## Estrutura do Código
 
