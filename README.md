@@ -13,7 +13,7 @@ A detecção, entretanto, é limitada às cartas de Ás a 10. **Não identifica*
 - Reis (K)
 
 ## Demonstração
-![Demonstração usando 9 de paus e Ás de ouros](assets\demo.gif)
+![Demonstração usando 9 de paus e Ás de ouros](https://github.com/FilhoDeEd/Cards-Detector/blob/main/assets/demo.gif)
 
 ## Instalação
 
