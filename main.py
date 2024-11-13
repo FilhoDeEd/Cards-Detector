@@ -1,14 +1,15 @@
 import cv2
-import constants as c
-from functions import *
+from utils import *
+
+width, height = (1280, 720)         # Tamanho da tela (HD)
+preview_name = 'Cards Detector'     # Nome da tela
+
 
 ###########################################################################
-#Threshold do filtro vermelho
-red_threshold = 6.0
 
-#Máscara de Zeros do tamanho da tela
+# Máscara de Zeros do tamanho da tela
 rectagle_mask = np.zeros((c.height, c.width, 3), dtype=np.uint8)
-#Retângulo com o tamanho da área que queremos computar
+# Retângulo com o tamanho da área que queremos computar
 rectagle_mask = cv2.rectangle(rectagle_mask, c.top_left, c.bottom_right, (255, 255, 255), -1)
 
 lower_bound = np.array([0, 0, 0], dtype=np.uint8)
@@ -35,7 +36,7 @@ while True:
         break
 
     # Detectando a cor da carta
-    card_color = red_or_black(frame, red_threshold)
+    card_color = red_or_black(frame, RED_THRESHOLD)
 
     # Contando o número de símbolos na carta
     card_value, keypoints = number_of_card(frame, rectagle_mask)

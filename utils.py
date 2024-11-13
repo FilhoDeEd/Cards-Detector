@@ -1,9 +1,29 @@
 import cv2
 import numpy as np
-import constants as c
 from typing import Literal
 
-#Configuração do Simple Blob Detector
+top_left = (width // 2 - 150, height // 2 - 225)
+bottom_right = (width // 2 + 150, height // 2 + 225)
+text_position = (width // 2 - 150, height // 2 - 250)
+
+# Filtro HSV ajustado para vermelho
+RED_FILTER = {
+    'min': {
+        'hue': 100,
+        'saturation': 21,
+        'value': 62
+    },
+    'max': {
+        'hue': 179,
+        'saturation': 211,
+        'value': 255
+    }
+}
+
+# Threshold do filtro vermelho
+RED_THRESHOLD = 6.0
+
+# Configuração do Simple Blob Detector
 params = cv2.SimpleBlobDetector_Params()
 params.filterByArea = True
 params.minArea = 1000
@@ -14,30 +34,11 @@ params.filterByConvexity = False
 params.filterByInertia = False
 detector = cv2.SimpleBlobDetector_create(params)
 
-
-def to_hsv(frame:cv2.typing.MatLike) -> cv2.typing.MatLike:
-    '''
-        Convert frame in HSV colors
-    '''
-    return cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-
-def filter_red(frame:cv2.typing.MatLike) -> cv2.typing.MatLike:
-    '''
-        Clips all colors but red defined in HSV min and max values set in constants.py
-    '''
-    return cv2.inRange(frame, np.array(list(c.min.values())), np.array(list(c.max.values())))   
-
 def crop_frame(frame:cv2.typing.MatLike) -> cv2.typing.MatLike:
     '''
         Crop the frame on the dimensions set in constants.py
     '''
     return frame[c.top_left[1]:c.bottom_right[1], c.top_left[0]:c.bottom_right[0]]
-     
-def apply_mask(frame:cv2.typing.MatLike, mask:cv2.typing.MatLike) -> cv2.typing.MatLike:
-    '''
-        Apply the mask in the frame
-    '''
-    return cv2.bitwise_and(frame, frame, mask=mask)
      
 def drawKeypoints(frame: cv2.typing.MatLike, keypoints: list[cv2.KeyPoint]) -> cv2.typing.MatLike:
     '''
@@ -46,15 +47,15 @@ def drawKeypoints(frame: cv2.typing.MatLike, keypoints: list[cv2.KeyPoint]) -> c
     return cv2.drawKeypoints(frame, keypoints, np.array([]), (0, 255, 255),
                                              cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
     
-def red_or_black(frame:cv2.typing.MatLike, red_threshold:float) -> Literal['red', 'black']:
+def red_or_black(frame: cv2.typing.MatLike) -> Literal['red', 'black']:
     '''
     Returns if color is red or black
     '''
-    hsv = to_hsv(frame)     #convertendo para hsv
-    red_mask = filter_red(hsv)     #criando mascara para apenas mostrar os vermelhos definidos
-    frame_color_filtered = apply_mask(frame,red_mask)     #aplicando mascara no frame
-    croped_frame_filtered = crop_frame(frame_color_filtered)    #recortando o frame para apenas computar a parte que interessa no cálculo da média (onde o retângulo sinaliza)
-    if np.mean(croped_frame_filtered) > red_threshold: #    caso a média for maior do que foi definido empiricamente: VERMELHO, se não, é PRETA   
+    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+    red_mask = cv2.inRange(hsv, np.array(RED_FILTER['min'].values()), np.array(RED_FILTER['max'].values()))
+    frame_filtered = cv2.bitwise_and(frame, frame, mask=red_mask)
+    croped_frame_filtered = frame_filtered[c.top_left[1]:c.bottom_right[1], c.top_left[0]:c.bottom_right[0]]
+    if np.mean(croped_frame_filtered) > RED_THRESHOLD:
         return 'red'
     else:
         return 'black'
