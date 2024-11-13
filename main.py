@@ -15,18 +15,18 @@ rectagle_mask = np.zeros((height, width, 3), dtype=np.uint8)
 rectagle_mask = cv2.rectangle(rectagle_mask, top_left, bottom_right, (255, 255, 255), -1)
 
 # Limiar da média de vermelho na imagem
-RED_THRESHOLD = 6.0
+RED_THRESHOLD = 1.2
 
 # Filtro HSV ajustado para vermelho
 RED_FILTER = {
     'min': {
-        'hue': 100,
-        'saturation': 21,
-        'value': 62 
+        'hue': 160,
+        'saturation': 129,
+        'value': 0 
     },
     'max': {
         'hue': 179,
-        'saturation': 211,
+        'saturation': 195,
         'value': 255
     }
 }
@@ -50,8 +50,8 @@ def detect_card_color(frame: cv2.typing.MatLike) -> Literal['red', 'black']:
     red_mask = cv2.inRange(hsv, np.array(list(RED_FILTER['min'].values())), np.array(list(RED_FILTER['max'].values())))
     frame_filtered = cv2.bitwise_and(frame, frame, mask=red_mask)
     croped_frame_filtered = frame_filtered[top_left[1]:bottom_right[1], top_left[0]:bottom_right[0]]
-    croped_frame_filtered_inverted = cv2.bitwise_not(croped_frame_filtered)
-    return 'red' if np.mean(croped_frame_filtered_inverted) > RED_THRESHOLD else 'black'
+    #print(np.mean(croped_frame_filtered))
+    return 'red' if np.mean(croped_frame_filtered) > RED_THRESHOLD else 'black'
 
 blobs_sum = 0
 count = 0
@@ -101,11 +101,11 @@ while True:
     frame_with_keypoints = cv2.drawKeypoints(frame, keypoints, np.array([]), (0, 255, 255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
     # Desenhando o retângulo onde pede a carta
-    cv2.rectangle(frame_with_keypoints, top_left, bottom_right, (255, 128, 128), 2)
-    cv2.putText(frame_with_keypoints, 'Posicione a carta aqui', text_position, cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 128, 128), 2, cv2.LINE_AA)
+    cv2.rectangle(frame_with_keypoints, top_left, bottom_right, (0, 255, 0), 3)
+    cv2.putText(frame_with_keypoints, 'Posicione a carta aqui', text_position, cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2, cv2.LINE_AA)
 
     # Resultado
-    cv2.putText(frame_with_keypoints, f'{card_number} {card_color}', result_position, cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 128, 128), 2, cv2.LINE_AA)
+    cv2.putText(frame_with_keypoints, f'{card_number} {card_color}', result_position, cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2, cv2.LINE_AA)
 
     # Mostra a frame
     cv2.imshow(preview_name, frame_with_keypoints)
