@@ -12,7 +12,8 @@ A detecção, entretanto, é limitada às cartas de Ás a 10. **Não identifica*
 - Damas (Q);
 - Reis (K)
 
-
+## Demonstração
+![Demonstração usando 9 de paus e Ás de ouros](assets\demo.gif)
 
 ## Instalação
 
