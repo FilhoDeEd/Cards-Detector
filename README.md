@@ -2,13 +2,23 @@
 
 ## Sistema de Detecção de Cartas de Baralho com OpenCV
 
-Este projeto utiliza **OpenCV** para detectar a cor e o número de uma carta de baralho padrão (52 cartas) capturada em tempo real por uma webcam. Ele identifica se a carta é vermelha ou preta e estima o número com base na contagem de símbolos visíveis. A detecção, entretanto, é limitada às cartas de Ás a 10; cartas com figuras como valete, dama e rei não são identificadas, já que o método se baseia na contagem dos símbolos na carta. O Ás de espadas, por exemplo, comumente possui uma imagem decorativa que também dificulta uma identificação precisa.
+Este projeto utiliza **técnicas de processamento de imagens** para detectar a cor e o número de uma carta de baralho padrão (52 cartas) capturada em tempo real por uma webcam. Ele identifica se a carta é vermelha ou preta e estima o número com base na contagem de símbolos visíveis. 
+
+A detecção, entretanto, é limitada às cartas de Ás a 10. **Não identifica**:
+
+- Naipes;
+- Ás de Espadas (♠);
+- Valetes (J);
+- Damas (Q);
+- Reis (K)
+
+
 
 ## Instalação
 
 ### Pré-requisitos
 
-- **Python 3.7+**
+- **Python 3**
 - **OpenCV (cv2)**
 
 ### Passos para Instalar
@@ -47,7 +57,13 @@ Clone este repositório e execute o script de detecção com uma webcam conectad
      - **Contar Símbolos**: Utiliza SimpleBlobDetector para contar o número de símbolos do naipe presentes na carta, permitindo identificar seu valor.
 
 4. **Exibição da Imagem Processada**
-   - Exibe a imagem com os resultados sobrepostos (número e cor da carta) em uma janela de visualização.
+   - Exibe o resultado com a cor e numeração da carta.
 
 5. **Encerramento**
    - Pressione a tecla 'q' para encerrar a captura e fechar a janela.
+
+## Autores
+- André Lisboa Augusto; 
+- Edson Rodrigues da Cruz Filho;
+- Marcos Henrique Maimoni Campanella;
+- Rodolfo Henrique Raymundo Engelmann;
