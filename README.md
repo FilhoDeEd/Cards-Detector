@@ -41,19 +41,19 @@ A detecção, entretanto, é limitada às cartas de Ás a 10. **Não identifica*
 
 ## Como Usar
 
-1.**Clone o Repositório**
+1. **Clone o Repositório**
 
 ```bash
    git clone https://github.com/FilhoDeEd/Cards-Detector.git
 ```
 
-2.**Execute o código**
+2. **Execute o código**
 - Na pasta do repositório, execute o comando para iniciar a identificação de cartas:
 ```bash
    python main.py
 ```
 
-3.**Aproxime a carta desejada no local indicado**
+3. **Aproxime a carta desejada no local indicado**
 
 ## Estrutura do Código
 
@@ -81,3 +81,5 @@ A detecção, entretanto, é limitada às cartas de Ás a 10. **Não identifica*
 - Edson Rodrigues da Cruz Filho;
 - Marcos Henrique Maimoni Campanella;
 - Rodolfo Henrique Raymundo Engelmann;
+
+### Engenharia da Computação - IFSP Piracicaba. Novembro, 2024
